@@ -1,18 +1,18 @@
-resource "aws_iam_policy" "policy" {
-  name        = "test_policy"
-  path        = "/"
-  description = "policy test aft account costumizations"
+data "aws_caller_identity" "current" {}
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "ec2:Describe*",
-        ]
-        Effect   = "Allow"
-        Resource = "*"
-      },
-    ]
-  })
+locals {
+  analyzer_name = "main_analyzer"
+}
+
+resource "aws_accessanalyzer_analyzer_org" "main_analyzer" {
+  # depends_on = [aws_organizations_organization.example]
+
+  analyzer_name = local.analyzer_name
+  type          = "controller"
+}
+resource "aws_accessanalyzer_analyzer_account" "main_analyzer" {
+  # depends_on = [aws_organizations_organization.example]
+
+  analyzer_name = local.analyzer_name
+  type          = data.aws_caller_identity.current.account_id
 }
