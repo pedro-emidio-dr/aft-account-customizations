@@ -16,7 +16,7 @@ data "aws_caller_identity" "current" {}
 # }
 
 resource "aws_s3_bucket" "example" {
-  bucket = "my-tf-test-bucket-${data.aws_caller_identity.current.account_id}"
+  bucket = "meu-bucket-lindo-${data.aws_caller_identity.current.account_id}"
 
   tags = {
     Environment = "Dev"
