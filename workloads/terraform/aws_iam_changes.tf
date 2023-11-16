@@ -1,13 +1,13 @@
 module "critical_events"{
     source = "./modules/event_bus"
 
-    event_bus_name = "criticalEventsTeste"
+    event_bus_name = "criticalEvents"
 }
 
 module "critical_events_target"{
     source = "./modules/event_bus"
 
-    event_bus_name = "criticalEventsTesteTarget"
+    event_bus_name = "criticalEventsTarget"
 }
 
 module "iam_changes_event" {
