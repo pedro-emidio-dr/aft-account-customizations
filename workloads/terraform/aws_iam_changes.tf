@@ -1,3 +1,9 @@
+module "critical_events"{
+    source = "./modules/event_bus"
+
+    event_bus_name = "criticalEvents"
+}
+
 module "iam_changes_sns_topic" {
   source = "./modules/sns_topics"
 
@@ -10,7 +16,6 @@ module "iam_changes_event" {
 
   rule_name        = "iam_changes"
   descripiton_rule = "Alert when IAM are changed"
-
   event_pattern_rule = <<PATTERN
 {
   "source": ["aws.iam"],
