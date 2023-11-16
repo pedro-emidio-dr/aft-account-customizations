@@ -1,14 +1,13 @@
 module "critical_events"{
     source = "./modules/event_bus"
 
-    event_bus_name = "criticalEvents"
+    event_bus_name = "criticalEventsTeste"
 }
 
-module "iam_changes_sns_topic" {
-  source = "./modules/sns_topics"
+module "critical_events_target"{
+    source = "./modules/event_bus"
 
-  sns_topic_name = "iam_changes_sns_topic"
-  kms_key_id     = "alias/aws/sns"
+    event_bus_name = "criticalEventsTesteTarget"
 }
 
 module "iam_changes_event" {
@@ -33,7 +32,7 @@ module "iam_changes_event" {
   }
 }
 PATTERN
-  target_id     = "iamChangeAlert"
-  target_arn    = module.iam_changes_sns_topic.arn
-  event_bus_name = "criticalEvents"
+  target_id      = "iamChangeAlert"
+  target_arn     = module.critical_events.arn        #source
+  event_bus_name = module.critical_events_target.arn #target
 }
