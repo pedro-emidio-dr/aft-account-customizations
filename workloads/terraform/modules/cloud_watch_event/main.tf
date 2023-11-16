@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "event_bus_invoke_remote_event_bus" {
-  name               = "event-bus-invoke-remote-event-bus"
+  name               = "eventBusInvokeRemoteEventBus"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
