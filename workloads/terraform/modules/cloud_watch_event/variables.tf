@@ -26,7 +26,3 @@ variable "target_id" {
   type        = string
   description = "Target identifier"
 }
-variable role_arn {
-  type        = string
-  description = "ARN of IAM Role with appropriate permissions."
-}
