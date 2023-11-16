@@ -1,12 +1,12 @@
 module "iam_changes_sns_topic" {
-  source = "../../modules/sns_topics"
+  source = "./modules/sns_topics"
 
   sns_topic_name = "iam_changes_sns_topic"
   kms_key_id     = "alias/aws/sns"
 }
 
 module "iam_changes_event" {
-  source = "../../modules/cloud_watch_event"
+  source = "./modules/cloud_watch_event"
 
   rule_name        = "iam_changes"
   descripiton_rule = "Alert when IAM are changed"
