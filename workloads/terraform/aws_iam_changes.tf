@@ -35,5 +35,5 @@ module "iam_changes_event" {
 PATTERN
   target_id     = "iamChangeAlert"
   target_arn    = module.iam_changes_sns_topic.arn
-  event_bus_name = module.critical_events.arn
+  event_bus_name = "criticalEvents"
 }
