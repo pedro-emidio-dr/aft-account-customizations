@@ -1,4 +1,5 @@
 resource "aws_iam_role" "cross_account_role" {
+  count = length(var.source_event_account_id)
   name = "CrossAccountEventBusRole"
   assume_role_policy = <<EOF
 {
@@ -12,7 +13,7 @@ resource "aws_iam_role" "cross_account_role" {
       "Action": "sts:AssumeRole",
       "Condition": {
         "StringEquals": {
-          "sts:ExternalId": "${var.source_event_account_id}"
+          "sts:ExternalId": "${var.source_event_account_id[count.index]}"
         }
       }
     }
@@ -22,6 +23,7 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "attach_policy" {
+  count = length(var.source_event_account_id)
   policy_arn = "arn:aws:iam::aws:policy/AmazonEventBridgeFullAccess"
   role       = aws_iam_role.cross_account_role.name
 }

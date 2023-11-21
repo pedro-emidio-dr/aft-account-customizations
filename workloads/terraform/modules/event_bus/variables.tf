@@ -3,7 +3,7 @@ variable event_bus_name {
   description = "Event Bus name."
 }
 variable source_event_account_id {
-  type        = string
+  type        = list(string)
   description = "Source event account id"
 }
 
