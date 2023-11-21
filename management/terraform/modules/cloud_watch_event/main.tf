@@ -1,27 +1,24 @@
-data "aws_iam_policy_document" "assume_role" {
-  statement {
-    effect = "Allow"
-    actions = ["sts:AssumeRole"]
-    resources = var.event_bus_name
-  }
-}
-
 resource "aws_iam_role" "event_bus_invoke_remote_event_bus" {
   name               = "eventBusInvokeRemoteEventBus"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect = "Allow",
+      Action = "sts:AssumeRole",
+      Resource = var.event_bus_name,
+    }],
+  })
 }
-
-data "aws_iam_policy_document" "event_bus_invoke_remote_event_bus" {
-  statement {
-    effect    = "Allow"
-    actions   = ["events:PutEvents"]
-    resources = [var.target_arn]
-  }
-}
-
 resource "aws_iam_policy" "event_bus_invoke_remote_event_bus" {
   name   = "event_bus_invoke_remote_event_bus"
-  policy = data.aws_iam_policy_document.event_bus_invoke_remote_event_bus.json
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect    = "Allow",
+      Action    = "events:PutEvents",
+      Resource  = var.target_arn,
+    }],
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "event_bus_invoke_remote_event_bus_custom" {
