@@ -22,6 +22,7 @@ resource "aws_iam_role" "cross_account_role" {
 EOF
 }
 resource "aws_iam_role_policy" "souce_account_access_target_account" {
+  count = length(var.source_event_account_id)
   name = "${var.source_event_account_id[count.index]}_access_target_account"
   role = aws_iam_role.cross_account_role.id
 
