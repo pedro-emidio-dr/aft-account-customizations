@@ -4,11 +4,14 @@ resource "aws_iam_role" "event_bus_invoke_remote_event_bus" {
     Version = "2012-10-17",
     Statement = [{
       Effect = "Allow",
+      Principal = {
+        Service = "events.amazonaws.com"
+      },
       Action = "sts:AssumeRole",
-      Resource = var.event_bus_name,
     }],
   })
 }
+
 resource "aws_iam_policy" "event_bus_invoke_remote_event_bus" {
   name   = "event_bus_invoke_remote_event_bus"
   policy = jsonencode({
@@ -16,8 +19,8 @@ resource "aws_iam_policy" "event_bus_invoke_remote_event_bus" {
     Statement = [{
       Effect    = "Allow",
       Action    = "events:PutEvents",
-      Resource  = var.target_arn,
-    }],
+      Resource  = var.event_bus_name
+    }]
   })
 }
 

@@ -21,6 +21,23 @@ resource "aws_iam_role" "cross_account_role" {
 }
 EOF
 }
+resource "aws_iam_role_policy" "souce_account_access_target_account" {
+  name = "${var.source_event_account_id[count.index]}_access_target_account"
+  role = aws_iam_role.cross_account_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "events:TagResource",
+        ]
+        Effect   = "Allow"
+        Resource = aws_cloudwatch_event_bus.main_event_bus.arn
+      },
+    ]
+  })
+}
 
 resource "aws_iam_role_policy_attachment" "attach_policy" {
   count = length(var.source_event_account_id)
