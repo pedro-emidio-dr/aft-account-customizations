@@ -1,13 +1,8 @@
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["events.amazonaws.com"]
-    }
-
     actions = ["sts:AssumeRole"]
+    Resource = ${var.event_bus_name}
   }
 }
 
@@ -29,9 +24,14 @@ resource "aws_iam_policy" "event_bus_invoke_remote_event_bus" {
   policy = data.aws_iam_policy_document.event_bus_invoke_remote_event_bus.json
 }
 
-resource "aws_iam_role_policy_attachment" "event_bus_invoke_remote_event_bus" {
+resource "aws_iam_role_policy_attachment" "event_bus_invoke_remote_event_bus_custom" {
   role       = aws_iam_role.event_bus_invoke_remote_event_bus.name
   policy_arn = aws_iam_policy.event_bus_invoke_remote_event_bus.arn
+}
+
+resource "aws_iam_role_policy_attachment" "event_bus_invoke_remote_event_bus" {
+  role       = aws_iam_role.event_bus_invoke_remote_event_bus.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEventBridgeFullAccess"
 }
 
 resource "aws_cloudwatch_event_rule" "default_event_rule" {
