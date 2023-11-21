@@ -26,13 +26,3 @@ variable "target_id" {
   type        = string
   description = "Target identifier"
 }
-
-
-
-
-
-
-
-
-
-

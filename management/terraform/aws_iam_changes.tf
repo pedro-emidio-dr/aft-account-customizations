@@ -4,12 +4,6 @@ module "critical_events"{
     event_bus_name = "criticalEvents"
 }
 
-module "critical_events_target"{
-    source = "./modules/event_bus"
-
-    event_bus_name = "criticalEventsTarget"
-}
-
 module "iam_changes_event" {
   source = "./modules/cloud_watch_event"
 
@@ -34,5 +28,5 @@ module "iam_changes_event" {
 PATTERN
   target_id      = "iamChangeAlert"
   target_arn     = module.critical_events.arn        #source
-  event_bus_name = module.critical_events_target.arn #target
+  event_bus_name = "Espearando o ARN" #target
 }
