@@ -2,7 +2,7 @@ data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
     actions = ["sts:AssumeRole"]
-    resource = var.event_bus_name
+    resources = var.event_bus_name
   }
 }
 
