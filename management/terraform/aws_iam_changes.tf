@@ -28,5 +28,5 @@ module "iam_changes_event" {
 PATTERN
   target_id      = "iamChangeAlert"
   target_arn     = module.critical_events.arn        #source
-  event_bus_name = "Espearando o ARN" #target
+  event_bus_name = "arn:aws:events:us-east-1:065058211633:event-bus/criticalEventsTarget" #target
 }
