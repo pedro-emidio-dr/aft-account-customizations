@@ -36,7 +36,6 @@ resource "aws_iam_role_policy_attachment" "event_bus_invoke_remote_event_bus" {
 
 resource "aws_cloudwatch_event_rule" "default_event_rule" {
   name           = var.rule_name
-  event_bus_name = var.event_bus_name
   description    = var.descripiton_rule
   event_pattern  = var.event_pattern_rule
 }
