@@ -1,7 +1,7 @@
 module "critical_events_target"{
     source = "./modules/event_bus"
 
-    arn_of_target          = "criticalEventsTarget"
+    event_bus_name          = "criticalEventsTarget"
     source_event_account_id = ["604828680752", "718814112976"]
 }
 
