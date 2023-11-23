@@ -18,7 +18,7 @@ resource "aws_iam_policy" "event_bus_invoke_remote_event_bus" {
     Version = "2012-10-17",
     Statement = [{
       Effect    = "Allow",
-      Action    = "events:*",
+      Action    = "",
       Resource  = var.arn_of_target
     }]
   })
@@ -44,5 +44,5 @@ resource "aws_cloudwatch_event_target" "default_event_target" {
   target_id = var.target_id
   arn       = var.arn_of_target
   rule      = aws_cloudwatch_event_rule.default_event_rule.name
-  role_arn  = aws_iam_role.event_bus_invoke_remote_event_bus.arn
+  # role_arn  = aws_iam_role.event_bus_invoke_remote_event_bus.arn
 }
