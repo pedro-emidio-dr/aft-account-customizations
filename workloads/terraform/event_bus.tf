@@ -14,11 +14,6 @@ module "capture_event_bus_events" {
 
   rule_name          = "capture_event_bus_events"
   descripiton_rule   = "Capture event bus events and send to sns topic"
-  event_pattern_rule = <<PATTERN
-{
-  "source": ["aws.events"]
-}
-PATTERN
-  target_id     = "eventBusEvents"
+  
   arn_of_target = module.critical_alerts_sns_topic.arn
 }
