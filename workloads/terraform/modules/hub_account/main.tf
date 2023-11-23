@@ -1,10 +1,5 @@
-resource "aws_cloudwatch_event_bus" "main_event_bus" {
-  name = var.event_bus_name
-}
-
 resource "aws_cloudwatch_event_permission" "OrganizationAccess" {
-  count          = length(var.source_event_account_id)
-  statement_id   = "Cross_account_permission_${var.source_event_account_id[count.index]}"
+  statement_id   = "Cross_account_permission"
   principal      = "*"
   event_bus_name = aws_cloudwatch_event_bus.main_event_bus.name
   condition {
