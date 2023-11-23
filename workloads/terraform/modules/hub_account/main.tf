@@ -28,14 +28,16 @@ resource "aws_iam_policy" "event_bus_invoke_remote_event_bus" {
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
-    {
-      Effect    = "Allow",
-      Action    = "events:PutEvents",
-      Resource  = aws_cloudwatch_event_bus.main_event_bus.arn
-    },
-      Effect    = "Allow",
-      Action    = "sns:Publish",
-      Resource  = var.arn_of_target
+      {
+        Effect    = "Allow",
+        Action    = "events:PutEvents",
+        Resource  = aws_cloudwatch_event_bus.main_event_bus.arn
+      },
+      {
+        Effect    = "Allow",
+        Action    = "sns:Publish",
+        Resource  = var.arn_of_target
+      }
     ]
   })
 }
