@@ -1,5 +1,5 @@
 module "iam_changes_event" {
-  source = "./modules/cloud_watch_event"
+  source = "./modules/spoke_account"
 
   rule_name        = "iam_changes"
   descripiton_rule = "Alert when IAM are changed"
