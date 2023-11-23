@@ -26,8 +26,4 @@ variable "arn_of_target" {
   default     = null
   description = "The Amazon Resource Name (ARN) of the target.(Example: SNS Topic or Event Bus target ARN"
 }
-variable "target_id" {
-  type        = string
-  description = "Target identifier"
-}
 
