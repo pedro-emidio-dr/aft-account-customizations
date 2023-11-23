@@ -1,10 +1,3 @@
-module "critical_events_target"{
-    source = "./modules/event_bus"
-
-    event_bus_name          = "criticalEventsTarget"
-    source_event_account_id = ["604828680752", "718814112976"]
-}
-
 module "critical_alerts_sns_topic" {
   source = "./modules/sns_topics"
 
@@ -14,10 +7,13 @@ module "critical_alerts_sns_topic" {
 }
 
 module "capture_event_bus_events" {
-  source = "./modules/cloud_watch_event"
+  source = "./modules/hub_account"
 
-  rule_name        = "capture_event_bus_events"
-  descripiton_rule = "Capture event bus events and send to sns topic"
+  event_bus_name          = "criticalEventsTarget"
+  source_event_account_id = ["604828680752", "718814112976"]
+
+  rule_name          = "capture_event_bus_events"
+  descripiton_rule   = "Capture event bus events and send to sns topic"
   event_pattern_rule = <<PATTERN
 {
   "source": ["aws.events"]
