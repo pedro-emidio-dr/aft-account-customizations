@@ -66,5 +66,5 @@ resource "aws_cloudwatch_event_target" "default_event_target" {
   target_id = "eventBusEvents"
   arn       = var.arn_of_target
   rule      = aws_cloudwatch_event_rule.default_event_rule.name
-  role_arn  = aws_iam_role.event_bus_invoke_remote_event_bus.arn
+  # role_arn  = aws_iam_role.event_bus_invoke_remote_event_bus.arn
 }
