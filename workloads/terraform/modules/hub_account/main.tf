@@ -21,7 +21,8 @@ PATTERN
 }
 
 resource "aws_cloudwatch_event_target" "default_event_target" {
-  target_id = "eventBusEvents"
-  arn       = var.arn_of_target
-  rule      = aws_cloudwatch_event_rule.default_event_rule.name
+  target_id      = "eventBusEvents"
+  arn            = var.arn_of_target
+  rule           = aws_cloudwatch_event_rule.default_event_rule.name
+  event_bus_name = aws_cloudwatch_event_bus.main_event_bus.arn
 }
