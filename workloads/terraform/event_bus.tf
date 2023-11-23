@@ -6,14 +6,14 @@ module "critical_events_target"{
 }
 
 module "critical_alerts_sns_topic" {
-  source = "../../modules/sns_topics"
+  source = "./modules/sns_topics"
 
   sns_topic_name = "critical_alerts_sns_topic"
   kms_key_id     = "alias/aws/sns"
   e_mail         = "pedro.emidio@datarain.com.br"
 }
 
-module "iam_changes_event" {
+module "capture_event_bus_events" {
   source = "./modules/cloud_watch_event"
 
   rule_name        = "capture_event_bus_events"
