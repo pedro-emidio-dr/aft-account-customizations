@@ -10,7 +10,6 @@ module "capture_event_bus_events" {
   source = "./modules/hub_account"
 
   event_bus_name          = "criticalEventsTarget"
-  source_event_account_id = ["604828680752", "718814112976"]
 
   rule_name          = "capture_event_bus_events"
   descripiton_rule   = "Capture event bus events and send to sns topic"
