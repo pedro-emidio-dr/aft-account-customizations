@@ -1,3 +1,7 @@
+resource "aws_cloudwatch_event_bus" "main_event_bus" {
+  name = var.event_bus_name
+}
+
 resource "aws_cloudwatch_event_permission" "OrganizationAccess" {
   statement_id   = "Cross_account_permission"
   principal      = "*"
