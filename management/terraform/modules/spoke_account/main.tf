@@ -1,5 +1,5 @@
 resource "aws_iam_role" "event_bus_invoke_remote_event_bus" {
-  name               = "InvokeRemoteEventBus"
+  name               = "InvokeRemoteEventBus_${var.rule_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [{
@@ -13,7 +13,7 @@ resource "aws_iam_role" "event_bus_invoke_remote_event_bus" {
 }
 
 resource "aws_iam_policy" "event_bus_invoke_remote_event_bus" {
-  name   = "invoke_remote_event_bus"
+  name   = "invoke_remote_event_bus_${var.rule_name}"
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [{
