@@ -7,14 +7,8 @@ module "ec2_termination_rule" {
 {
   "source": ["aws.ec2"],
   "detail-type": ["EC2 Instance State-change Notification"],
-  "resources": ["arn:aws:ec2:your-region:your-account-id:instance/your-instance-id"],
   "detail": {
-    "state": ["shutting-down", "terminated", "stopping", "stopped"]
-  },
-  "condition": {
-    "StringEquals": {
-      "ec2:ResourceTag/Environment": "PRD"
-    }
+    "state": ["terminated", "shutting-down", "stopping", "stopped"]
   }
 }
 
