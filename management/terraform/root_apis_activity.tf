@@ -18,6 +18,6 @@ module "root_apis_activity" {
   }
 }
 PATTERN
-  target_id      = "consoleSignInViaCloudTrail"
+  target_id      = "rootApisActivity"
   event_bus_name = "arn:aws:events:us-east-1:065058211633:event-bus/criticalEventsTarget" #target
 }
