@@ -1,17 +1,21 @@
-module "critical_alerts_sns_topic" {
-  source = "./modules/sns_topics"
+module "hub" {
+  source = "./modules/hub_account"
 
-  sns_topic_name = "critical_alerts_sns_topic"
+  event_bus_name = "EventBusCriticalAlerts"
+  sns_topic_name = "CriticalAlertsTopic"
   e_mail         = "pedro.emidio@datarain.com.br"
 }
 
-module "capture_event_bus_events" {
-  source = "./modules/hub_account"
+module "hub_rule" {
+  source = "./modules/hub_rules"
 
-  event_bus_name          = "criticalEventsTarget"
-
-  rule_name          = "capture_event_bus_events"
-  descripiton_rule   = "Capture event bus events and send to sns topic"
-  
-  arn_of_target = module.critical_alerts_sns_topic.arn
+  rule_name          = "IAMActionsRule"
+  rule_description    = "Get events by custom event bus of IAM"
+  event_pattern_rule = <<PATTERN
+{
+  "source": ["aws.iam"]
+}
+  PATTERN
+  event_bus_arn      = module.hub.event_bus_arn
+  aws_sns_topic_arn  = module.hub.sns_topic_arn
 }

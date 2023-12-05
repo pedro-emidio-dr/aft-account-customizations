@@ -1,25 +1,17 @@
+# ---------------------- AWS Event Bridge ----------------------
 variable event_bus_name {
   type        = string
   description = "Event Bus name."
 }
-variable "rule_name" {
+# ---------------------- SNS ----------------------
+variable "sns_topic_name" {
+  type        = string
+  description = "SNS Topic name"
+}
+variable "e_mail" {
   type        = string
   default     = ""
-  description = "If passed, create a cloud watch event rule. If it is passed, it is also necessary to pass event_pattern_rule."
+  description = "E-mail subscribe on topic"
 }
-variable "descripiton_rule" {
-  type        = string
-  default     = ""
-  description = "Description of rule. It is only necessary if rule_name is provided."
-}
-variable "event_pattern_rule" {
-  type        = string
-  default     = ""
-  description = "The event pattern described a JSON object. It is only necessary if rule_name is provided."
-}
-variable "arn_of_target" {
-  type        = string
-  default     = null
-  description = "The Amazon Resource Name (ARN) of the target.(Example: SNS Topic or Event Bus target ARN"
-}
+
 
