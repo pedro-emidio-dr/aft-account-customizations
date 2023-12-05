@@ -9,7 +9,12 @@ provider "aws" {
 
 module "hub" {
   source = "./modules/spoke_account"
-  
+
+  required_providers = {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
   providers = {
     aws = aws.virginia
   }
@@ -34,6 +39,11 @@ target_id = "getIAMActions"
 module "spoker-sp" {
   source = "./modules/spoke_account"
   
+  required_providers = {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
   providers = {
     aws = aws.saopaulo
   }
