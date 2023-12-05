@@ -10,18 +10,13 @@ provider "aws" {
 module "hub" {
   source = "./modules/spoke_account"
 
-  required_providers = {
-    aws = {
-      source = "hashicorp/aws"
-    }
-  }
   providers = {
     aws = aws.virginia
   }
 
-rule_name = "getIAMRoleAcctions"
-    descripiton_rule = ""
-event_pattern_rule = <<PATTERN
+  rule_name = "getIAMRoleAcctions"
+  descripiton_rule = ""
+  event_pattern_rule = <<PATTERN
 {
   "source": ["aws.iam"],
   "detail-type": ["AWS API Call via CloudTrail"],
@@ -39,18 +34,13 @@ target_id = "getIAMActions"
 module "spoker-sp" {
   source = "./modules/spoke_account"
   
-  required_providers = {
-    aws = {
-      source = "hashicorp/aws"
-    }
-  }
   providers = {
     aws = aws.saopaulo
   }
   
-rule_name = "getIAMRoleAcctions"
-    descripiton_rule = ""
-event_pattern_rule = <<PATTERN
+  rule_name = "getIAMRoleAcctions"
+  descripiton_rule = ""
+  event_pattern_rule = <<PATTERN
 {
   "source": ["aws.iam"],
   "detail-type": ["AWS API Call via CloudTrail"],
@@ -61,6 +51,6 @@ event_pattern_rule = <<PATTERN
 }
 PATTERN
 
-event_bus_name = "arn:aws:events:us-east-1:065058211633:event-bus/EventBusCriticalAlerts"
-target_id = "getIAMActions"
+  event_bus_name = "arn:aws:events:us-east-1:065058211633:event-bus/EventBusCriticalAlerts"
+  target_id = "getIAMActions"
 }
