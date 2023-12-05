@@ -1,5 +1,5 @@
 module "hub" {
-  source = "../modules/spoke_account"
+  source = "./modules/spoke_account"
 rule_name = "getIAMRoleAcctions"
     descripiton_rule = ""
 event_pattern_rule = <<PATTERN
