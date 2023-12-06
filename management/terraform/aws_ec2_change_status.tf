@@ -1,6 +1,10 @@
 module "hub" {
   source = "./modules/spoke_account"
 
+  providers  = {
+    aws = aws.us_east_1
+  }
+
   rule_name = "getIAMRoleAcctions"
   descripiton_rule = ""
   event_pattern_rule = <<PATTERN
@@ -20,6 +24,10 @@ target_id = "getIAMActions"
 
 module "spoker-sp" {
   source = "./modules/spoke_account"
+
+  providers  = {
+    aws = aws.sa_east_1
+  }
 
   rule_name = "getIAMRoleAcctions"
   descripiton_rule = ""
