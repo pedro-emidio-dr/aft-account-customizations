@@ -5,11 +5,11 @@ module "hub" {
   descripiton_rule = ""
   event_pattern_rule = <<PATTERN
 {
-  "source": ["aws.iam"],
+  "source": ["aws.ec2"],
   "detail-type": ["AWS API Call via CloudTrail"],
   "detail": {
-    "eventSource": ["iam.amazonaws.com"],
-    "eventName": ["CreateRole", "DeleteRole"]
+    "eventSource": ["ec2.amazonaws.com"],
+    "eventName": ["StopInstances","RunInstances","StartInstances","TerminateInstances"]
   }
 }
 PATTERN
@@ -25,11 +25,11 @@ module "spoker-sp" {
   descripiton_rule = ""
   event_pattern_rule = <<PATTERN
 {
-  "source": ["aws.iam"],
+  "source": ["aws.ec2"],
   "detail-type": ["AWS API Call via CloudTrail"],
   "detail": {
-    "eventSource": ["iam.amazonaws.com"],
-    "eventName": ["CreateRole", "DeleteRole"]
+    "eventSource": ["ec2.amazonaws.com"],
+    "eventName": ["StopInstances","RunInstances","StartInstances","TerminateInstances"]
   }
 }
 PATTERN
