@@ -1,17 +1,8 @@
-provider "aws" {
-  alias  = "virginia"
-  region = "us-east-1"
-}
-provider "aws" {
-  alias  = "saopaulo"
-  region = "sa-east-1"
-}
-
 module "hub" {
   source = "./modules/spoke_account"
 
   providers = {
-    aws = aws.virginia
+    aws = aws.us_east_1
   }
 
   rule_name = "getIAMRoleAcctions"
@@ -33,11 +24,12 @@ target_id = "getIAMActions"
 
 module "spoker-sp" {
   source = "./modules/spoke_account"
+
   
   providers = {
-    aws = aws.saopaulo
+    aws = aws.sa_east_1
   }
-  
+
   rule_name = "getIAMRoleAcctions"
   descripiton_rule = ""
   event_pattern_rule = <<PATTERN
