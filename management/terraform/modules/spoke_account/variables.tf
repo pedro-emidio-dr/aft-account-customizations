@@ -20,8 +20,3 @@ variable "target_id" {
   type        = string
   description = "Target identifier"
 }
-# variable region {
-#   type        = string
-#   description = "Region to deploy"
-# }
-
