@@ -17,8 +17,8 @@ def lambda_handler(event, context):
     client = boto3.client('ec2')
     ssm_client = boto3.client('ssm')
     
-    topic_arn = ssm_client.get_parameter(Name="/alarms/topic_arn")
-    tag_ec2_Cluster = ssm_client.get_parameter(Name="/alarms/tag_ec2_cluster")
+    topic_arn = ssm_client.get_parameter(Name="topic_arn")
+    tag_ec2_Cluster = ssm_client.get_parameter(Name="tag_ec2_cluster")
     
     tags = extract_tags_from_json(event)
     tag_to_detect = tag_ec2_Cluster['Parameter']['Value']

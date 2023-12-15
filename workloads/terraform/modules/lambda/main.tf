@@ -64,6 +64,7 @@ data "archive_file" "source" {
 }
 resource "aws_lambda_function" "main_lambda" {
   function_name    = "filter-ec2-tags"
+  timeout          = 5
   filename         = "${path.module}/lambda_function.zip"
   source_code_hash = data.archive_file.source.output_base64sha256
   handler          = "lambda_function.lambda_handler"
