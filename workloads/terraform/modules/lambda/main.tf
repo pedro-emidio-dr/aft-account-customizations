@@ -40,12 +40,12 @@ resource "aws_iam_policy" "main_policy" {
     {
       Effect = "Allow"
       Action = ["ssm:GetParameter"]
-      Resource = [var.parameter_topic_arn]
+      Resource = [aws_ssm_parameter.topic_arn.arn]
     },
     {
       Effect = "Allow"
       Action = ["ssm:GetParameter"]
-      Resource = [var.parameter_ec2_tag]
+      Resource = [aws_ssm_parameter.tag_ec2_cluster.arn]
     }
     ]
   }
