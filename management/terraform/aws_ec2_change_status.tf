@@ -10,8 +10,6 @@ module "spoker-us-east-1" {
   "detail": {
     "eventSource": ["ec2.amazonaws.com"],
     "eventName": ["StopInstances","RunInstances","StartInstances","TerminateInstances"]
-    "requestParameters.tagSpecificationSet.items.tags.value": [{ "anything-but": "True"}],
-    "requestParameters.tagSpecificationSet.items.tags.key": ["IsEksCluster"],
   }
 }
 PATTERN

@@ -17,5 +17,27 @@ module "hub_rule" {
 }
   PATTERN
   event_bus_arn      = module.hub.event_bus_arn
-  aws_sns_topic_arn  = module.hub.sns_topic_arn
+  target_arn         = module.hub.sns_topic_arn
+}
+
+module "ec2_lambda_filter"{
+  source = "./modules/lambda"
+
+  topic_arn         = module.hub.sns_topic_arn
+  kms_key_arn       = module.hub.kms_key_arn
+  ec2_tag_to_filter = "eks:cluster:name"
+}
+
+module "hub_rule_lambda"{
+  source = "./modules/hub_rules"
+
+  rule_name          = "ec2-tag-filter"
+  rule_description    = "When the event is aws.ec2 invokes lambda to filter event based on tag"
+  event_pattern_rule = <<PATTERN
+{
+  "source": ["aws.ec2"]
+}
+  PATTERN
+  event_bus_arn      = module.hub.event_bus_arn
+  target_arn         = module.ec2_lambda_filter.parameter_topic_arn
 }

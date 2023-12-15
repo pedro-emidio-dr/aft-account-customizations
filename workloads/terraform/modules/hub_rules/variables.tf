@@ -15,7 +15,7 @@ variable "event_bus_arn"{
   type        = string
   description = "AWS Event bus arn."
 }
-variable aws_sns_topic_arn {
+variable target_arn {
   type        = string
-  description = "Arn of target AWS SNS Topic."
+  description = "Arn of target (Examples: SNS Topic Arn or Lambda Arn)."
 }

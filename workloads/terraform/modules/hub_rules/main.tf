@@ -8,7 +8,7 @@ resource "aws_cloudwatch_event_rule" "default_event_rule" {
 
 resource "aws_cloudwatch_event_target" "default_event_target" {
   target_id      = "eventBusEvents"
-  arn            = var.aws_sns_topic_arn
+  arn            = var.target_arn
   rule           = aws_cloudwatch_event_rule.default_event_rule.name
   event_bus_name = var.event_bus_arn
 }
