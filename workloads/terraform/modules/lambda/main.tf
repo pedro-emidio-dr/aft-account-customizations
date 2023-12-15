@@ -71,6 +71,15 @@ resource "aws_lambda_function" "main_lambda" {
   role             = aws_iam_role.main_role.arn
   runtime          = "python3.12"
 }
+resource "aws_lambda_permission" "trigger_permission" {
+  statement_id  = "AllowS3Invoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.main_lambda.arn
+  principal     = "events.amazonaws.com"
+
+  source_arn = "*"
+}
+
 
 resource "aws_ssm_parameter" "topic_arn" {
   name  = "topic_arn"
