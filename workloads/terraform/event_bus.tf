@@ -39,5 +39,5 @@ module "hub_rule_lambda"{
 }
   PATTERN
   event_bus_arn      = module.hub.event_bus_arn
-  target_arn         = module.ec2_lambda_filter.parameter_topic_arn
+  target_arn         = module.ec2_lambda_filter.lambda_arn
 }
