@@ -57,12 +57,11 @@ resource "aws_iam_role_policy_attachment" "main_attachment" {
   role = aws_iam_role.main_role.name
 }
 
-data "archive_file" "lambda_code" {
-  type        = "zip"
-  source_file = "lambda_function.py"
-  output_path = "lambda_function.zip"
+data "archive_file" "source" {
+  type         = "zip"
+  source_file  = "${path.module}/lambda_function.py"
+  output_path  = "${path.module}/lambda_function.zip"
 }
-
 resource "aws_lambda_function" "main_lambda" {
   function_name    = "filter-ec2-tags"
   filename         = "lambda_function.zip"
