@@ -69,7 +69,7 @@ resource "aws_lambda_function" "main_lambda" {
   source_code_hash = data.archive_file.lambda_code.output_base64sha256
   handler          = "lambda_function.lambda_handler"
   role             = aws_iam_role.main_role.arn
-  runtime          = "Python 3.11"
+  runtime          = "python3.12"
 }
 
 resource "aws_ssm_parameter" "topic_arn" {
