@@ -11,10 +11,9 @@ variable "event_pattern_rule" {
   type        = string
   description = "The event pattern described a JSON object. It is only necessary if rule_name is provided."
 }
-variable "event_bus_name" {
+variable target_arn {
   type        = string
-  default     = null
-  description = "Event bus name. It is only necessary if rule_name is provided."
+  description = "Arn of target (Examples: SNS Topic Arn or Lambda Arn)."
 }
 variable "target_id" {
   type        = string

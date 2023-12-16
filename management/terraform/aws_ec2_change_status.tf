@@ -1,3 +1,10 @@
+module "ec2_lambda_filter"{
+  source = "./modules/lambda"
+
+  ec2_tag_to_filter = "eks:cluster:name"
+  event_bus_arn = "arn:aws:events:us-east-1:065058211633:event-bus/EventBusCriticalAlerts"
+}
+
 module "spoker-us-east-1" {
   source = "./modules/spoke_account"
 
@@ -14,6 +21,6 @@ module "spoker-us-east-1" {
 }
 PATTERN
 
-event_bus_name = "arn:aws:events:us-east-1:065058211633:event-bus/EventBusCriticalAlerts"
-target_id = "getEC2ChangeStatus"
+  event_bus_name = module.ec2_lambda_filter.lambda_arn
+  target_id = "getEC2ChangeStatus"
 }

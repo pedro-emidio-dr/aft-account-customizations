@@ -20,13 +20,6 @@ module "hub_rule" {
   target_arn         = module.hub.sns_topic_arn
 }
 
-module "ec2_lambda_filter"{
-  source = "./modules/lambda"
-
-  topic_arn         = module.hub.sns_topic_arn
-  kms_key_arn       = module.hub.kms_key_arn
-  ec2_tag_to_filter = "eks:cluster:name"
-}
 
 module "hub_rule_lambda"{
   source = "./modules/hub_rules"
@@ -39,5 +32,5 @@ module "hub_rule_lambda"{
 }
   PATTERN
   event_bus_arn      = module.hub.event_bus_arn
-  target_arn         = module.ec2_lambda_filter.lambda_arn
+  target_arn         = module.hub.sns_topic_arn
 }

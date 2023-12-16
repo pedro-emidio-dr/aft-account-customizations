@@ -24,18 +24,6 @@ resource "aws_iam_policy" "main_policy" {
         "logs:PutLogEvents"
       ]
       Resource = ["arn:aws:logs:*:*:*"]
-    },{
-      Effect = "Allow"
-      Action = ["sns:Publish"]
-      Resource = [var.topic_arn]
-    },{
-      Effect = "Allow"
-      Action = [
-        "kms:Decrypt",
-        "kms:Encrypt",
-        "kms:GenerateDataKey"
-      ]
-      Resource = [var.kms_key_arn]
     },
     {
       Effect = "Allow"
@@ -46,6 +34,11 @@ resource "aws_iam_policy" "main_policy" {
       Effect = "Allow"
       Action = ["ssm:GetParameter"]
       Resource = [aws_ssm_parameter.tag_ec2_cluster.arn]
+    },
+    {
+      Effect = "Allow"
+      Action = ["ec2:DescribeInstances"]
+      Resource = ["*"]
     }
     ]
   }
@@ -77,14 +70,15 @@ resource "aws_lambda_permission" "trigger_permission" {
   function_name = aws_lambda_function.main_lambda.arn
   principal     = "events.amazonaws.com"
 
-  source_arn = "*"
+  #corrigir
+  source_arn = "arn:aws:events:sa-east-1:*:rule/*"
 }
 
 
-resource "aws_ssm_parameter" "topic_arn" {
-  name  = "topic_arn"
+resource "aws_ssm_parameter" "event_bus_arn" {
+  name  = "event_bus_arn"
   type  = "String"
-  value = var.topic_arn
+  value = var.event_bus_arn
 }
 
 resource "aws_ssm_parameter" "tag_ec2_cluster" {
