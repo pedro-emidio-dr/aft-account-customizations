@@ -64,6 +64,8 @@ resource "aws_lambda_function" "main_lambda" {
   role             = aws_iam_role.main_role.arn
   runtime          = "python3.12"
 }
+data "aws_caller_identity" "current" {}
+
 resource "aws_lambda_permission" "trigger_permission" {
   statement_id  = "AllowS3Invoke"
   action        = "lambda:InvokeFunction"
@@ -71,7 +73,7 @@ resource "aws_lambda_permission" "trigger_permission" {
   principal     = "events.amazonaws.com"
 
   #corrigir
-  source_arn = "arn:aws:events:sa-east-1:*:rule/*"
+  source_arn = "arn:aws:events:us-east-1:${data.aws_caller_identity.current.account_id}:rule/*"
 }
 
 
