@@ -24,7 +24,7 @@ resource "aws_iam_policy" "event_bus_invoke_remote_event_bus" {
     Statement = [{
       Effect    = "Allow",
       Action    = "events:PutEvents",
-      Resource  = var.event_bus_name
+      Resource  = var.target_arn
     }]
   })
 }

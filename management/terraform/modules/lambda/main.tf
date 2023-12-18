@@ -28,7 +28,7 @@ resource "aws_iam_policy" "main_policy" {
     {
       Effect = "Allow"
       Action = ["ssm:GetParameter"]
-      Resource = [aws_ssm_parameter.topic_arn.arn]
+      Resource = [aws_ssm_parameter.event_bus_arn.arn]
     },
     {
       Effect = "Allow"
