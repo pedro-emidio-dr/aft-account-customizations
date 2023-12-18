@@ -37,16 +37,21 @@ resource "aws_kms_key_policy" "main_policy_key" {
           "Resource": "*"
       },  
       {
-          "Sid": "Allow SNS Topic ${aws_sns_topic.default_sns_topic.name} to use the key",
-          "Effect": "Allow",
-          "Principal": {
-              "AWS": "[${aws_sns_topic.default_sns_topic.arn}]"
-          },
-          "Action": [
-              "kms:Decrypt",
-              "kms:GenerateDataKey"
-          ],
-          "Resource": "*"
+        "Sid": "Allow SNS Topic to use the key",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "sns.amazonaws.com"
+        },
+        "Action": [
+          "kms:Decrypt",
+          "kms:GenerateDataKey"
+        ],
+        "Resource": "*",
+        "Condition": {
+          "StringEquals": {
+            "aws:SourceArn": "${aws_sns_topic.default_sns_topic.arn}"
+          }
+        }
       }
     ]
 }
