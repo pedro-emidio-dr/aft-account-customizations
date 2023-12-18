@@ -1,9 +1,9 @@
 locals {
-  function_name = value
+  function_name = "filter-ec2-tags"
 }
 
 resource "aws_iam_role" "main_role" {
-  name = "IAMRoleForLambda-${aws_lambda_function.main_lambda.name}-${data.aws_region.current.name}"
+  name = "IAMRoleForLambda-${local.function_name}-${data.aws_region.current.name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
