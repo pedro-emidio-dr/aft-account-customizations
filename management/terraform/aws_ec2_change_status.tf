@@ -6,7 +6,7 @@ module "ec2_lambda_filter"{
 }
 
 module "spoker-us-east-1" {
-  source = "./modules/spoke_account"
+  source = "./modules/spoke_rule_with_lambda"
 
   rule_name = "getEC2ChangeStatus"
   descripiton_rule = ""
