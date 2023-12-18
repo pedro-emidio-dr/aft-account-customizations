@@ -73,7 +73,7 @@ resource "aws_lambda_permission" "trigger_permission" {
   principal     = "events.amazonaws.com"
 
   #corrigir
-  source_arn = "arn:aws:events:us-east-1:${data.aws_caller_identity.current.account_id}:rule/*"
+  source_arn = "arn:aws:events:*:${data.aws_caller_identity.current.account_id}:rule/*"
 }
 
 
