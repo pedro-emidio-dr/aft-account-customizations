@@ -23,7 +23,7 @@ resource "aws_iam_policy" "event_bus_invoke_remote_event_bus" {
     Version = "2012-10-17",
     Statement = [{
       Effect    = "Allow",
-      Action    = "events:PutEvents",
+      Action: "lambda:InvokeFunction",
       Resource  = var.target_arn
     }]
   })
@@ -32,11 +32,6 @@ resource "aws_iam_policy" "event_bus_invoke_remote_event_bus" {
 resource "aws_iam_role_policy_attachment" "event_bus_invoke_remote_event_bus_custom" {
   role       = aws_iam_role.event_bus_invoke_remote_event_bus.name
   policy_arn = aws_iam_policy.event_bus_invoke_remote_event_bus.arn
-}
-
-resource "aws_iam_role_policy_attachment" "event_bus_invoke_remote_event_bus" {
-  role       = aws_iam_role.event_bus_invoke_remote_event_bus.name
-  policy_arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
 }
 
 resource "aws_cloudwatch_event_rule" "default_event_rule" {
