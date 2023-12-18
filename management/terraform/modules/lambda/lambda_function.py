@@ -29,11 +29,32 @@ def get_ec2_tags(instance_id):
 def check_tag_exists(tags, target_tag):
     tag_exists = any(tag['Key'] == target_tag for tag in tags)
     return tag_exists
+
+def enviar_evento(event_bus_arn, detalhes_evento):
+    client = boto3.client('events')
+
+    detalhes_evento_json = json.dumps(detalhes_evento)
+
+    response = client.put_events(
+        Entries=[
+            {
+                'Source': 'custom.application',
+                'DetailType': 'custom.event',
+                'Detail': detalhes_evento_json,
+                'EventBusName': event_bus_arn
+            }
+        ]
+    )
+    if response['FailedEntryCount'] == 0:
+        print("Evento enviado com sucesso!")
+    else:
+        print(f"Falha ao enviar evento. Detalhes: {response['Entries'][0]['ErrorCode']} - {response['Entries'][0]['ErrorMessage']}")
+
     
 def lambda_handler(event, context):
     ssm_client = boto3.client('ssm')
     
-    tag_ec2_Cluster = ssm_client.get_parameter(Name="tag_ec2_cluster")
+    tag_ec2_Cluster = ssm_client.get_parameter(Name="tag_ec2_cluster")['Parameter']['Value']
 
     instance_id = get_instance_id_from_event(event)
     tags = get_ec2_tags(instance_id)
@@ -42,18 +63,12 @@ def lambda_handler(event, context):
         print(f"A chave {tag_ec2_Cluster} existe no evento. Este evento não será notificado.")
     else:
         print(f"A chave {tag_ec2_Cluster} não existe no evento. Este evento será notificado.")
-        events_client = boto3.client('events')
-        event_bus_arn = ssm_client.get_parameter(Name="event-bus-arn")
-        event_payload = {
-            'EventBusName': event_bus_arn,
-            'Detail': json.dumps(event),
-            'Source': 'custom.application',
-            'DetailType': 'customEventType',
-        }
-        response = events_client.put_events(Entries=[event_payload])
-        print(response)
+        event_bus_arn = ssm_client.get_parameter(Name="event_bus_arn")['Parameter']['Value']
+        enviar_evento(event_bus_arn, event )
+
+        print("Success")
         
     return {
         'statusCode': 200,
-        'body': json.dumps('Olá a partir do Lambda!')
+        'body': json.dumps('Success')
     }

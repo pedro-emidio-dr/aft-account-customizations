@@ -28,17 +28,17 @@ resource "aws_iam_policy" "main_policy" {
     {
       Effect = "Allow"
       Action = ["ssm:GetParameter"]
-      Resource = [aws_ssm_parameter.event_bus_arn.arn]
-    },
-    {
-      Effect = "Allow"
-      Action = ["ssm:GetParameter"]
-      Resource = [aws_ssm_parameter.tag_ec2_cluster.arn]
+      Resource = [aws_ssm_parameter.event_bus_arn.arn, aws_ssm_parameter.tag_ec2_cluster.arn]
     },
     {
       Effect = "Allow"
       Action = ["ec2:DescribeInstances"]
       Resource = ["*"]
+    },
+    {
+      Effect = "Allow"
+      Action = ["events:PutEvents"]
+      Resource = [var.event_bus_arn]
     }
     ]
   }
