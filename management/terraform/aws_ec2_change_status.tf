@@ -21,6 +21,6 @@ module "spoker-us-east-1" {
 }
 PATTERN
 
-  event_bus_name = module.ec2_lambda_filter.lambda_arn
+  target_arn = module.ec2_lambda_filter.lambda_arn
   target_id = "getEC2ChangeStatus"
 }
