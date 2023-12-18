@@ -1,3 +1,7 @@
+locals {
+  function_name = value
+}
+
 resource "aws_iam_role" "main_role" {
   name = "IAMRoleForLambda-${aws_lambda_function.main_lambda.name}-${data.aws_region.current.name}"
   assume_role_policy = jsonencode({
@@ -13,7 +17,7 @@ resource "aws_iam_role" "main_role" {
 }
 
 resource "aws_iam_policy" "main_policy" {
-  name        = "IAMPolicyForLambda-${aws_lambda_function.main_lambda.name}-${data.aws_region.current.name}"
+  name        = "IAMPolicyForLambda-${local.function_name}-${data.aws_region.current.name}"
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -57,7 +61,7 @@ data "archive_file" "source" {
 }
 
 resource "aws_lambda_function" "main_lambda" {
-  function_name    = "filter-ec2-tags"
+  function_name    = local.function_name
   timeout          = 5
   filename         = "${path.module}/lambda_function.zip"
   source_code_hash = data.archive_file.source.output_base64sha256
@@ -77,13 +81,13 @@ resource "aws_lambda_permission" "trigger_permission" {
 
 
 resource "aws_ssm_parameter" "event_bus_arn" {
-  name  = "/alarm/${aws_lambda_function.main_lambda.name}/${data.aws_region.current.name}/event_bus_arn"
+  name  = "/alarm/${local.function_name}/${data.aws_region.current.name}/event_bus_arn"
   type  = "String"
   value = var.event_bus_arn
 }
 
 resource "aws_ssm_parameter" "tag_ec2_cluster" {
-  name  = "/alarm/${aws_lambda_function.main_lambda.name}/${data.aws_region.current.name}/tag_ec2_cluster"
+  name  = "/alarm/${local.function_name}/${data.aws_region.current.name}/tag_ec2_cluster"
   type  = "String"
   value = var.ec2_tag_to_filter
 }

@@ -6,6 +6,14 @@ import logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+def get_current_region():
+    sts_client = boto3.client('sts')
+    response = sts_client.get_caller_identity()
+    arn = response['Arn']
+    region = arn.split(':')[3]
+    return region
+
+
 def get_instance_id_from_event(event):
     try:
         instances = [
@@ -71,8 +79,10 @@ def send_event(event_bus_arn, event_details):
 def lambda_handler(event, context):
     try:
         ssm_client = boto3.client('ssm')
-        
-        tag_ec2_cluster = ssm_client.get_parameter(Name="tag_ec2_cluster")['Parameter']['Value']
+
+        tag_ec2_cluster_parameter_name = f"/alarm/filter-ec2-tags/{get_current_region()}/tag_ec2_cluster"
+        tag_ec2_cluster = ssm_client.get_parameter(Name=tag_ec2_cluster_parameter_name)['Parameter']['Value']
+
         instance_id = get_instance_id_from_event(event)
         tags = get_ec2_tags(instance_id)
         
@@ -81,7 +91,8 @@ def lambda_handler(event, context):
         else:
             logger.info(f"The key {tag_ec2_cluster} does not exist in the event. This event will be notified.")
            
-            event_bus_arn = ssm_client.get_parameter(Name="event_bus_arn")['Parameter']['Value']
+            event_bus_arn_parameter_name = f"/alarm/filter-ec2-tags/{get_current_region()}/event_bus_arn"
+            event_bus_arn = ssm_client.get_parameter(Name=event_bus_arn_parameter_name)['Parameter']['Value']
             send_event(event_bus_arn, event )
     
             logger.info("Success")
