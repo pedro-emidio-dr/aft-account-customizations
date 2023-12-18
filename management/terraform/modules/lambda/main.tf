@@ -65,6 +65,7 @@ resource "aws_lambda_function" "main_lambda" {
   runtime          = "python3.12"
 }
 data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
 
 resource "aws_lambda_permission" "trigger_permission" {
   statement_id  = "AllowS3Invoke"
@@ -73,7 +74,7 @@ resource "aws_lambda_permission" "trigger_permission" {
   principal     = "events.amazonaws.com"
 
   #corrigir
-  source_arn = "arn:aws:events:*:${data.aws_caller_identity.current.account_id}:rule/*"
+  source_arn = "arn:aws:events:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:rule/*"
 }
 
 
