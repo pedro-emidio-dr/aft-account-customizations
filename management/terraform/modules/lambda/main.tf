@@ -1,5 +1,5 @@
 resource "aws_iam_role" "main_role" {
-  name = "example-role"
+  name = "IAMRoleForLambda-${aws_lambda_function.main_lambda.name}-${data.aws_region.current.name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -13,7 +13,7 @@ resource "aws_iam_role" "main_role" {
 }
 
 resource "aws_iam_policy" "main_policy" {
-  name        = "lambda-policy"
+  name        = "IAMPolicyForLambda-${aws_lambda_function.main_lambda.name}-${data.aws_region.current.name}"
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -55,6 +55,7 @@ data "archive_file" "source" {
   source_file  = "${path.module}/lambda_function.py"
   output_path  = "${path.module}/lambda_function.zip"
 }
+
 resource "aws_lambda_function" "main_lambda" {
   function_name    = "filter-ec2-tags"
   timeout          = 5
@@ -64,28 +65,25 @@ resource "aws_lambda_function" "main_lambda" {
   role             = aws_iam_role.main_role.arn
   runtime          = "python3.12"
 }
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
 
 resource "aws_lambda_permission" "trigger_permission" {
-  statement_id  = "AllowS3Invoke"
+  statement_id  = "AllowEventRuleInvoke"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.main_lambda.arn
   principal     = "events.amazonaws.com"
 
-  #corrigir
   source_arn = "arn:aws:events:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:rule/*"
 }
 
 
 resource "aws_ssm_parameter" "event_bus_arn" {
-  name  = "event_bus_arn"
+  name  = "/alarm/${aws_lambda_function.main_lambda.name}/${data.aws_region.current.name}/event_bus_arn"
   type  = "String"
   value = var.event_bus_arn
 }
 
 resource "aws_ssm_parameter" "tag_ec2_cluster" {
-  name  = "tag_ec2_cluster"
+  name  = "/alarm/${aws_lambda_function.main_lambda.name}/${data.aws_region.current.name}/tag_ec2_cluster"
   type  = "String"
   value = var.ec2_tag_to_filter
 }

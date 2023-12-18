@@ -1,12 +1,14 @@
 # -------------- AWS KMS Key --------------
 resource "aws_kms_key" "main_key" {
-  description             = "AWS KMS Key for AWS SNS Topic"
+  description           = "AWS KMS Key for AWS SNS Topic"
+  enable_key_rotation   = true
+
 }
 resource "aws_kms_alias" "main_key_alias" {
   name          = "alias/kms-key-for-sns-topic"
   target_key_id = aws_kms_key.main_key.key_id
 }
-resource "aws_kms_key_policy" "example" {
+resource "aws_kms_key_policy" "main_policy_key" {
   key_id = aws_kms_key.main_key.id
   policy = <<POLICY
   {
@@ -35,10 +37,10 @@ resource "aws_kms_key_policy" "example" {
           "Resource": "*"
       },  
       {
-          "Sid": "Allow SNS to use the key",
+          "Sid": "Allow SNS Topic ${aws_sns_topic.default_sns_topic.name} to use the key",
           "Effect": "Allow",
           "Principal": {
-              "Service": "sns.amazonaws.com"
+              "AWS": "[${aws_sns_topic.default_sns_topic.arn}]"
           },
           "Action": [
               "kms:Decrypt",

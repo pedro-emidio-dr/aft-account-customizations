@@ -24,11 +24,11 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aws_sns_topic_arn"></a> [aws\_sns\_topic\_arn](#input\_aws\_sns\_topic\_arn) | Arn of target AWS SNS Topic. | `string` | n/a | yes |
 | <a name="input_event_bus_arn"></a> [event\_bus\_arn](#input\_event\_bus\_arn) | AWS Event bus arn. | `string` | n/a | yes |
 | <a name="input_event_pattern_rule"></a> [event\_pattern\_rule](#input\_event\_pattern\_rule) | The event pattern described a JSON object. | `string` | n/a | yes |
 | <a name="input_rule_description"></a> [rule\_description](#input\_rule\_description) | Description of rule. | `string` | `""` | no |
 | <a name="input_rule_name"></a> [rule\_name](#input\_rule\_name) | Create a cloud watch event rule. It is also necessary to pass event\_pattern\_rule. | `string` | n/a | yes |
+| <a name="input_target_arn"></a> [target\_arn](#input\_target\_arn) | Arn of target (Examples: SNS Topic Arn or Lambda Arn). | `string` | n/a | yes |
 
 ## Outputs
 

@@ -25,10 +25,10 @@ module "hub_rule_lambda"{
   source = "./modules/hub_rules"
 
   rule_name          = "ec2-tag-filter"
-  rule_description    = "When the event is aws.ec2 invokes lambda to filter event based on tag"
+  rule_description    = "When the event is ec2 invokes send to SNS Topic"
   event_pattern_rule = <<PATTERN
 {
-  "source": ["aws.ec2"]
+  "source": ["custom.application"]
 }
   PATTERN
   event_bus_arn      = module.hub.event_bus_arn
