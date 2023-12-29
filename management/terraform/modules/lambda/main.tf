@@ -60,6 +60,11 @@ data "archive_file" "source" {
   output_path  = "${path.module}/lambda_function.zip"
 }
 
+#checkov:skip=CKV_AWS_50:This lambda does not interact with others, so its flow is simple and there is no need to enable X-Ray.
+#checkov:skip=CKV_AWS_272:The solution does not justify the need for code-signing.
+#checkov:skip=CKV_AWS_117:There is no interaction with other resources via the network.
+#checkov:skip=CKV_AWS_115:No volume test was carried out, therefore there is no established limit.
+#checkov:skip=CKV_AWS_116:All errors are handled by the application itself.
 resource "aws_lambda_function" "main_lambda" {
   function_name    = local.function_name
   timeout          = 5
@@ -79,13 +84,16 @@ resource "aws_lambda_permission" "trigger_permission" {
   source_arn = "arn:aws:events:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:rule/*"
 }
 
-
+#checkov:skip=CKV_AWS_337:The stored information is not sensitive
+#checkov:skip=CKV2_AWS_34:The stored information is not sensitive
 resource "aws_ssm_parameter" "event_bus_arn" {
   name  = "/alarm/${local.function_name}/${data.aws_region.current.name}/event_bus_arn"
   type  = "String"
   value = var.event_bus_arn
 }
 
+#checkov:skip=CKV_AWS_337:The stored information is not sensitive
+#checkov:skip=CKV2_AWS_34:The stored information is not sensitive
 resource "aws_ssm_parameter" "tag_ec2_cluster" {
   name  = "/alarm/${local.function_name}/${data.aws_region.current.name}/tag_ec2_cluster"
   type  = "String"

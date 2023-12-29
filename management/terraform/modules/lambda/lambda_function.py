@@ -92,7 +92,6 @@ def lambda_handler(event, context):
            
             event_bus_arn_parameter_name = f"/alarm/filter-ec2-tags/{get_current_region()}/event_bus_arn"
 
-
             event_bus_arn = ssm_client.get_parameter(Name=event_bus_arn_parameter_name)['Parameter']['Value']
             send_event(event_bus_arn, event )
     

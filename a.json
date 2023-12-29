@@ -1,0 +1,19 @@
+{'version': '0', 'id': 'ceb91ffb-e23d-547e-35b1-7fc24c76c423', 'detail-type': 'AWS API Call via CloudTrail', 'source': 'aws.ec2', 'account': '084787048212', 'time': '2023-12-19T19: 16: 41Z', 'region': 'us-east-1', 'resources': [], 'detail': {'eventVersion': '1.09', 'userIdentity': {'type': 'AssumedRole', 'principalId': 'AROARHPNTV4KLLX5KPS4E:fabiana.mitestainer@bancobmg.com.br', 'arn': 'arn:aws:sts: : 084787048212:assumed-role/AWSReservedSSO_AdministratorAccess_5d862bfca6716fc2/fabiana.mitestainer@bancobmg.com.br', 'accountId': '084787048212', 'accessKeyId': 'ASIARHPNTV4KF5V3P3PA', 'sessionContext': {'sessionIssuer': {'type': 'Role', 'principalId': 'AROARHPNTV4KLLX5KPS4E', 'arn': 'arn:aws:iam: : 084787048212:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AdministratorAccess_5d862bfca6716fc2', 'accountId': '084787048212', 'userName': 'AWSReservedSSO_AdministratorAccess_5d862bfca6716fc2'
+                }, 'attributes': {'creationDate': '2023-12-19T18: 50: 18Z', 'mfaAuthenticated': 'false'
+                }
+            }
+        }, 'eventTime': '2023-12-19T19: 16: 41Z', 'eventSource': 'ec2.amazonaws.com', 'eventName': 'StopInstances', 'awsRegion': 'us-east-1', 'sourceIPAddress': '161.69.101.196', 'userAgent': 'AWS Internal', 'requestParameters': {'instancesSet': {'items': [
+                    {'instanceId': 'i-03a50226fd9c0c811'
+                    }
+                ]
+            }, 'force': False
+        }, 'responseElements': {'requestId': 'ad6ca497-2cc3-4e47-abd3-0a819a2af693', 'instancesSet': {'items': [
+                    {'instanceId': 'i-03a50226fd9c0c811', 'currentState': {'code': 64, 'name': 'stopping'
+                        }, 'previousState': {'code': 16, 'name': 'running'
+                        }
+                    }
+                ]
+            }
+        }, 'requestID': 'ad6ca497-2cc3-4e47-abd3-0a819a2af693', 'eventID': '35f048cf-5f3f-4be0-9732-11b6dc8a4430', 'readOnly': False, 'eventType': 'AwsApiCall', 'managementEvent': True, 'recipientAccountId': '084787048212', 'eventCategory': 'Management', 'sessionCredentialFromConsole': 'true'
+    }
+}
